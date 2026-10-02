@@ -249,10 +249,6 @@
             box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
         }
 
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
         /* Filter Controls */
         .filter-wrapper {
             display: flex;
@@ -268,7 +264,7 @@
             min-width: 210px;
         }
 
-        /* Tabel Presisi Desktop */
+        /* Tables & Typography */
         .table-responsive {
             width: 100%;
         }
@@ -298,15 +294,11 @@
             vertical-align: top;
         }
 
-        tbody tr {
-            transition: background-color 0.15s ease;
-        }
-
         tbody tr:hover {
             background-color: #F8FAFC;
         }
 
-        /* Categorical & Status Badges */
+        /* Categorical Badges */
         .badge {
             font-weight: 600;
             padding: 4px 10px;
@@ -322,20 +314,21 @@
         .cat-jig { background-color: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
         .cat-trial { background-color: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
 
-        .pill-status {
-            padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 11px;
+        /* Status Select Interaktif */
+        .select-status {
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11.5px;
             font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid transparent;
+            outline: none;
+            transition: all 0.2s ease;
         }
 
-        .st-rencana { background-color: #F1F5F9; color: #475569; }
-        .st-proses { background-color: #FEF3C7; color: #B45309; }
-        .st-selesai { background-color: #D1FAE5; color: #065F46; }
+        .select-status.st-rencana { background-color: #F1F5F9; color: #475569; border-color: #CBD5E1; }
+        .select-status.st-proses { background-color: #FEF3C7; color: #B45309; border-color: #FDE68A; }
+        .select-status.st-selesai { background-color: #D1FAE5; color: #065F46; border-color: #A7F3D0; }
 
         .btn-delete {
             background-color: #FFF1F2;
@@ -355,14 +348,11 @@
             border-color: var(--danger);
         }
 
-        /* Label helper khusus tampilan mobile (disembunyikan di desktop) */
         .mobile-label {
             display: none;
         }
 
-        /* ========================================================
-           RESPONSIF OPTIMAL UNTUK LAYAR PONSEL (HP)
-           ======================================================== */
+        /* Responsif Layar HP */
         @media (max-width: 820px) {
             header {
                 padding: 16px 18px;
@@ -379,7 +369,6 @@
                 padding: 0 12px;
             }
 
-            /* KPI Card Ringkas */
             .kpi-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
@@ -418,7 +407,6 @@
                 margin-top: 0;
             }
 
-            /* Form Layout HP */
             .form-grid {
                 grid-template-columns: 1fr;
                 gap: 12px;
@@ -449,7 +437,7 @@
                 padding: 16px;
             }
 
-            /* TRANSFORMASI TABEL KE SISTEM KARTU VERTIKAL (Tanpa Geser Kanan-Kiri) */
+            /* Sistem Kartu Vertikal Mobile */
             table, thead, tbody, th, td, tr {
                 display: block;
             }
@@ -476,10 +464,6 @@
                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
             }
 
-            #tabel-body tr:hover {
-                background: var(--surface);
-            }
-
             #tabel-body td {
                 padding: 6px 0;
                 border: none;
@@ -488,7 +472,6 @@
                 flex-direction: column;
             }
 
-            /* Baris Header Kartu: Tanggal, Kategori & Status */
             #tabel-body td.cell-header-top {
                 flex-direction: row;
                 justify-content: space-between;
@@ -552,7 +535,7 @@
     </header>
 
     <div class="container">
-        <!-- Modern KPI Cards -->
+        <!-- Dashboard KPI -->
         <div class="kpi-grid">
             <div class="kpi-card kpi-navy">
                 <div class="kpi-label">Total Aktivitas</div>
@@ -605,7 +588,7 @@
 
                         <div class="form-group span-2">
                             <label for="judul">Uraian Proyek / Masalah / Kode Produk</label>
-                            <input type="text" id="judul" placeholder="Contoh: Evaluasi curing adhesif Dymax UV 3091 pada base 8602" required>
+                            <input type="text" id="judul" placeholder="Contoh: Modif jig 8602 jadi inner 8603" required>
                         </div>
                         <div class="form-group">
                             <label for="target-selesai">Target Tanggal Selesai</label>
@@ -622,7 +605,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="status">Status Progres</label>
+                            <label for="status">Status Progres Awal</label>
                             <select id="status" required>
                                 <option value="Dalam Rencana">Dalam Rencana</option>
                                 <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
@@ -655,14 +638,12 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
-                            <th>Kategori</th>
+                            <th>Kategori & Tanggal</th>
+                            <th>Status Progres</th>
                             <th>Lini</th>
                             <th>Uraian Rekayasa / Masalah</th>
                             <th>Instruksi / Catatan Teknis</th>
-                            <th>PIC</th>
-                            <th>Target</th>
-                            <th>Status</th>
+                            <th>PIC & Target</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -674,10 +655,10 @@
         </div>
     </div>
 
-    <!-- Firebase SDK v12.19.0 -->
+    <!-- Integrasi Firebase SDK v12.19.0 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, updateDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBsYZsvaPw-UbAIdTd00juRmT_ZO5bIEPc",
@@ -703,12 +684,11 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // Set tanggal hari ini otomatis
         document.getElementById('tanggal').valueAsDate = new Date();
 
         let databaseCache = [];
 
-        // Submit Form
+        // Submit Catatan Baru
         document.getElementById('form-jurnal').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -746,7 +726,7 @@
             console.error("Firestore Snapshot Error: ", error);
         });
 
-        // Logika Render UI
+        // Render Tampilan UI
         function renderData() {
             const tbody = document.getElementById('tabel-body');
             const filterVal = document.getElementById('filter-kategori').value;
@@ -782,7 +762,11 @@
                             <span class="badge ${catClass}">${escapeHtml(row.kategori)}</span>
                             <span style="font-weight: 700; color: var(--navy-dark); font-size: 12.5px;">${escapeHtml(row.tanggal)}</span>
                         </div>
-                        <span class="pill-status ${statusClass}">${escapeHtml(row.status)}</span>
+                        <select class="select-status ${statusClass}" data-id="${row.id}">
+                            <option value="Dalam Rencana" ${row.status === 'Dalam Rencana' ? 'selected' : ''}>Dalam Rencana</option>
+                            <option value="Sedang Dikerjakan" ${row.status === 'Sedang Dikerjakan' ? 'selected' : ''}>Sedang Dikerjakan</option>
+                            <option value="Selesai & Diverifikasi" ${row.status === 'Selesai & Diverifikasi' ? 'selected' : ''}>Selesai & Diverifikasi</option>
+                        </select>
                     </td>
                     <td>
                         <span class="mobile-label">Lokasi / Lini</span>
@@ -825,10 +809,27 @@
             document.getElementById('kpi-trial').innerText = countTrial;
         }
 
-        // Listener Filter Dropdown
+        // Listener Filter
         document.getElementById('filter-kategori').addEventListener('change', renderData);
 
-        // Event Delegation Tombol Hapus
+        // Event Listener: Pembaruan Status Progres Otomatis ke Firestore
+        document.getElementById('tabel-body').addEventListener('change', async (e) => {
+            if (e.target.classList.contains('select-status')) {
+                const docId = e.target.getAttribute('data-id');
+                const statusBaru = e.target.value;
+
+                try {
+                    await updateDoc(doc(db, 'jurnal_assyAlpha', docId), {
+                        status: statusBaru
+                    });
+                } catch (err) {
+                    console.error("Gagal memperbarui status: ", err);
+                    alert("Gagal memperbarui status progres: " + err.message);
+                }
+            }
+        });
+
+        // Event Listener: Hapus Rekaman
         document.getElementById('tabel-body').addEventListener('click', async (e) => {
             if (e.target.classList.contains('btn-delete')) {
                 const docId = e.target.getAttribute('data-id');
