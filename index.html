@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -96,7 +96,7 @@
             padding: 0 24px;
         }
 
-        /* KPI Dashboard Grid */
+        /* KPI Dashboard Grid Desktop */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -268,9 +268,9 @@
             min-width: 210px;
         }
 
-        /* Tables & Typography */
+        /* Tabel Presisi Desktop */
         .table-responsive {
-            overflow-x: auto;
+            width: 100%;
         }
 
         table {
@@ -330,6 +330,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
         }
 
         .st-rencana { background-color: #F1F5F9; color: #475569; }
@@ -354,26 +355,73 @@
             border-color: var(--danger);
         }
 
-        /* Mobile Adaptability */
+        /* Label helper khusus tampilan mobile (disembunyikan di desktop) */
+        .mobile-label {
+            display: none;
+        }
+
+        /* ========================================================
+           RESPONSIF OPTIMAL UNTUK LAYAR PONSEL (HP)
+           ======================================================== */
         @media (max-width: 820px) {
             header {
-                padding: 18px 20px;
+                padding: 16px 18px;
             }
 
             .header-content {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 12px;
+                gap: 10px;
             }
 
             .container {
-                margin: 16px auto;
-                padding: 0 14px;
+                margin: 14px auto;
+                padding: 0 12px;
             }
 
+            /* KPI Card Ringkas */
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 18px;
+            }
+
+            .kpi-card {
+                padding: 10px 12px;
+                border-radius: 10px;
+            }
+
+            .kpi-card::before {
+                height: 3px;
+            }
+
+            .kpi-label {
+                font-size: 9.5px;
+                letter-spacing: 0.02em;
+                line-height: 1.2;
+            }
+
+            .kpi-val {
+                margin-top: 4px;
+                font-size: 20px;
+            }
+
+            .kpi-card:first-child {
+                grid-column: span 2;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 14px;
+            }
+
+            .kpi-card:first-child .kpi-val {
+                margin-top: 0;
+            }
+
+            /* Form Layout HP */
             .form-grid {
                 grid-template-columns: 1fr;
-                gap: 14px;
+                gap: 12px;
             }
 
             .form-group.span-2,
@@ -383,10 +431,10 @@
             }
 
             .card-header {
-                padding: 16px 20px;
+                padding: 14px 16px;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
+                gap: 12px;
             }
 
             .filter-wrapper {
@@ -398,7 +446,95 @@
             }
 
             .card-body {
-                padding: 20px;
+                padding: 16px;
+            }
+
+            /* TRANSFORMASI TABEL KE SISTEM KARTU VERTIKAL (Tanpa Geser Kanan-Kiri) */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            #tabel-body {
+                padding: 12px;
+                background-color: var(--bg-base);
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            #tabel-body tr {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 14px 16px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            }
+
+            #tabel-body tr:hover {
+                background: var(--surface);
+            }
+
+            #tabel-body td {
+                padding: 6px 0;
+                border: none;
+                font-size: 13px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Baris Header Kartu: Tanggal, Kategori & Status */
+            #tabel-body td.cell-header-top {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 10px;
+                margin-bottom: 8px;
+            }
+
+            #tabel-body td.cell-title {
+                padding: 4px 0;
+            }
+
+            .mobile-label {
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                margin-bottom: 3px;
+            }
+
+            .mobile-grid-meta {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                background: #F8FAFC;
+                padding: 10px 12px;
+                border-radius: 8px;
+                margin: 8px 0;
+                border: 1px solid var(--border);
+            }
+
+            .mobile-action-bar {
+                display: flex;
+                justify-content: flex-end;
+                padding-top: 10px;
+                border-top: 1px dashed var(--border);
+                margin-top: 8px;
+            }
+
+            .mobile-action-bar .btn-delete {
+                width: 100%;
+                padding: 8px;
+                font-size: 12px;
             }
         }
     </style>
@@ -427,7 +563,7 @@
                 <div class="kpi-val" id="kpi-project">0</div>
             </div>
             <div class="kpi-card kpi-purple">
-                <div class="kpi-label">Mesin (Perbaikan / Tambah)</div>
+                <div class="kpi-label">Mesin (Perbaikan/Tambah)</div>
                 <div class="kpi-val" id="kpi-mesin">0</div>
             </div>
             <div class="kpi-card">
@@ -538,7 +674,7 @@
         </div>
     </div>
 
-    <!-- Firebase SDK v12.19.0 (Integrasi Penuh Bebas Bug) -->
+    <!-- Firebase SDK v12.19.0 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
@@ -557,7 +693,6 @@
         const db = getFirestore(app);
         const jurnalCol = collection(db, 'jurnal_assyAlpha');
 
-        // Sanitasi karakter HTML
         function escapeHtml(text) {
             if (!text) return '-';
             return String(text)
@@ -568,12 +703,12 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // Set tanggal otomatis
+        // Set tanggal hari ini otomatis
         document.getElementById('tanggal').valueAsDate = new Date();
 
         let databaseCache = [];
 
-        // Penanganan Submit Form
+        // Submit Form
         document.getElementById('form-jurnal').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -611,7 +746,7 @@
             console.error("Firestore Snapshot Error: ", error);
         });
 
-        // Render Tampilan UI & Agregasi KPI
+        // Logika Render UI
         function renderData() {
             const tbody = document.getElementById('tabel-body');
             const filterVal = document.getElementById('filter-kategori').value;
@@ -642,16 +777,41 @@
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-weight: 600; color: var(--navy-dark);">${escapeHtml(row.tanggal)}</td>
-                    <td><span class="badge ${catClass}">${escapeHtml(row.kategori)}</span></td>
-                    <td><strong>${escapeHtml(row.lini)}</strong></td>
-                    <td style="font-weight: 500;">${escapeHtml(row.judul)}</td>
-                    <td style="color: var(--text-muted);">${escapeHtml(row.tindakan)}</td>
-                    <td>${escapeHtml(row.pic)}</td>
-                    <td style="font-weight: 500;">${escapeHtml(row.targetSelesai)}</td>
-                    <td><span class="pill-status ${statusClass}">${escapeHtml(row.status)}</span></td>
+                    <td class="cell-header-top">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <span class="badge ${catClass}">${escapeHtml(row.kategori)}</span>
+                            <span style="font-weight: 700; color: var(--navy-dark); font-size: 12.5px;">${escapeHtml(row.tanggal)}</span>
+                        </div>
+                        <span class="pill-status ${statusClass}">${escapeHtml(row.status)}</span>
+                    </td>
                     <td>
-                        <button class="btn-delete" data-id="${row.id}">Hapus</button>
+                        <span class="mobile-label">Lokasi / Lini</span>
+                        <strong style="color: var(--navy-light); font-size: 13.5px;">${escapeHtml(row.lini)}</strong>
+                    </td>
+                    <td class="cell-title">
+                        <span class="mobile-label">Uraian Rekayasa / Masalah</span>
+                        <span style="font-weight: 600; color: var(--text-main); font-size: 14px; line-height: 1.4;">${escapeHtml(row.judul)}</span>
+                    </td>
+                    <td>
+                        <span class="mobile-label">Instruksi / Catatan Teknis</span>
+                        <div style="color: var(--text-muted); background: #F8FAFC; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 12.5px; line-height: 1.45;">
+                            ${escapeHtml(row.tindakan)}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="mobile-grid-meta">
+                            <div>
+                                <span class="mobile-label">PIC Lapangan</span>
+                                <div style="font-weight: 600; font-size: 12.5px;">${escapeHtml(row.pic)}</div>
+                            </div>
+                            <div>
+                                <span class="mobile-label">Target Selesai</span>
+                                <div style="font-weight: 600; font-size: 12.5px; color: var(--navy-dark);">${escapeHtml(row.targetSelesai)}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="mobile-action-bar">
+                        <button class="btn-delete" data-id="${row.id}">Hapus Rekaman</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
