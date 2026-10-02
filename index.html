@@ -1,0 +1,687 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal - Assembly Alpha</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette: Deep Navy & Emerald Modern */
+            --navy-dark: #0A192F;
+            --navy-card: #0F223D;
+            --navy-light: #1E3A63;
+            --emerald: #10B981;
+            --emerald-hover: #059669;
+            --emerald-glow: rgba(16, 185, 129, 0.25);
+            --bg-base: #F8FAFC;
+            --surface: #FFFFFF;
+            --border: #E2E8F0;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --info: #3B82F6;
+            --purple: #8B5CF6;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        /* Header Modern */
+        header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-card) 100%);
+            color: var(--surface);
+            padding: 24px 32px;
+            box-shadow: 0 4px 20px rgba(10, 25, 47, 0.08);
+            border-bottom: 3px solid var(--emerald);
+        }
+
+        .header-content {
+            max-width: 1350px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title p {
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            color: #94A3B8;
+            font-weight: 400;
+        }
+
+        .badge-role {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--emerald);
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .container {
+            max-width: 1350px;
+            margin: 28px auto;
+            padding: 0 24px;
+        }
+
+        /* KPI Dashboard Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 20px 22px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 8px 16px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--emerald);
+        }
+
+        .kpi-card.kpi-navy::before { background: var(--navy-light); }
+        .kpi-card.kpi-blue::before { background: var(--info); }
+        .kpi-card.kpi-purple::before { background: var(--purple); }
+        .kpi-card.kpi-orange::before { background: var(--warning); }
+
+        .kpi-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-val {
+            margin-top: 10px;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.03em;
+        }
+
+        /* Card Section Styling */
+        .card-box {
+            background: var(--surface);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FCFDFD;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-body {
+            padding: 28px;
+        }
+
+        /* Form Structure */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.span-2 { grid-column: span 2; }
+        .form-group.span-3 { grid-column: span 3; }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--navy-dark);
+            margin-bottom: 7px;
+            letter-spacing: 0.01em;
+        }
+
+        input, select, textarea {
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 13.5px;
+            outline: none;
+            transition: all 0.2s ease;
+            background-color: #FBFDFD;
+            color: var(--text-main);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--emerald);
+            background-color: var(--surface);
+            box-shadow: 0 0 0 4px var(--emerald-glow);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn-submit {
+            grid-column: span 3;
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-hover) 100%);
+            color: var(--surface);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 24px;
+            font-weight: 700;
+            font-size: 13.5px;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px var(--emerald-glow);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Filter Controls */
+        .filter-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .filter-wrapper select {
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            min-width: 210px;
+        }
+
+        /* Tables & Typography */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #F8FAFC;
+            color: var(--text-muted);
+            padding: 14px 18px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 1.5px solid var(--border);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px 18px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tbody tr {
+            transition: background-color 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #F8FAFC;
+        }
+
+        /* Categorical & Status Badges */
+        .badge {
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .cat-project { background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; }
+        .cat-perbaikan { background-color: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
+        .cat-mesin { background-color: #F5F3FF; color: #6D28D9; border: 1px solid #DDD6FE; }
+        .cat-jig { background-color: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+        .cat-trial { background-color: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+
+        .pill-status {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .st-rencana { background-color: #F1F5F9; color: #475569; }
+        .st-proses { background-color: #FEF3C7; color: #B45309; }
+        .st-selesai { background-color: #D1FAE5; color: #065F46; }
+
+        .btn-delete {
+            background-color: #FFF1F2;
+            color: var(--danger);
+            border: 1px solid #FECDD3;
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 11.5px;
+            font-weight: 600;
+            transition: all 0.15s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: var(--danger);
+            color: var(--surface);
+            border-color: var(--danger);
+        }
+
+        /* Mobile Adaptability */
+        @media (max-width: 820px) {
+            header {
+                padding: 18px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .container {
+                margin: 16px auto;
+                padding: 0 14px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .form-group.span-2,
+            .form-group.span-3,
+            .btn-submit {
+                grid-column: span 1;
+            }
+
+            .card-header {
+                padding: 16px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .filter-wrapper {
+                width: 100%;
+            }
+
+            .filter-wrapper select {
+                width: 100%;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="header-title">
+                <h1>Log Rekayasa & Jurnal Proyek</h1>
+                <p>Dokumentasi Line Assembly, Mesin Produksi, Jig Produk & Trial Produk</p>
+            </div>
+            <div class="badge-role">Assembly Alpha</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Modern KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card kpi-navy">
+                <div class="kpi-label">Total Aktivitas</div>
+                <div class="kpi-val" id="kpi-total">0</div>
+            </div>
+            <div class="kpi-card kpi-blue">
+                <div class="kpi-label">Project Line</div>
+                <div class="kpi-val" id="kpi-project">0</div>
+            </div>
+            <div class="kpi-card kpi-purple">
+                <div class="kpi-label">Mesin (Perbaikan / Tambah)</div>
+                <div class="kpi-val" id="kpi-mesin">0</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Pengembangan Jig</div>
+                <div class="kpi-val" id="kpi-jig">0</div>
+            </div>
+            <div class="kpi-card kpi-orange">
+                <div class="kpi-label">Trial Produk</div>
+                <div class="kpi-val" id="kpi-trial">0</div>
+            </div>
+        </div>
+
+        <!-- Input Journal Panel -->
+        <div class="card-box">
+            <div class="card-header">
+                <h3>Input Rekam Aktivitas Rekayasa</h3>
+            </div>
+            <div class="card-body">
+                <form id="form-jurnal">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tanggal">Tanggal Catatan / Rencana</label>
+                            <input type="date" id="tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kategori">Kategori Pekerjaan</label>
+                            <select id="kategori" required>
+                                <option value="Project Line">Project Line</option>
+                                <option value="Perbaikan Mesin">Perbaikan Mesin</option>
+                                <option value="Penambahan Mesin">Penambahan Mesin</option>
+                                <option value="Penambahan Jig">Penambahan Jig</option>
+                                <option value="Trial Produk">Trial Produk</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lini">Identifikasi Line / Lokasi</label>
+                            <input type="text" id="lini" placeholder="Contoh: Line Alpha, Sub-Assy 2" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="judul">Uraian Proyek / Masalah / Kode Produk</label>
+                            <input type="text" id="judul" placeholder="Contoh: Evaluasi curing adhesif Dymax UV 3091 pada base 8602" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="target-selesai">Target Tanggal Selesai</label>
+                            <input type="date" id="target-selesai" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="tindakan">Instruksi Teknis / Parameter Evaluasi / Vendor</label>
+                            <textarea id="tindakan" placeholder="Detail parameter uji, instruksi pemeliharaan, atau mitigasi risiko lini"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="pic">Penanggung Jawab (PIC)</label>
+                            <input type="text" id="pic" placeholder="Contoh: Tim Maintenance / Leader A" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status">Status Progres</label>
+                            <select id="status" required>
+                                <option value="Dalam Rencana">Dalam Rencana</option>
+                                <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                                <option value="Selesai & Diverifikasi">Selesai & Diverifikasi</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Simpan Rekam Jurnal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Monitoring Records Panel -->
+        <div class="card-box">
+            <div class="card-header">
+                <h3>Monitoring Riwayat Rekayasa</h3>
+                <div class="filter-wrapper">
+                    <select id="filter-kategori">
+                        <option value="ALL">Semua Kategori</option>
+                        <option value="Project Line">Project Line</option>
+                        <option value="Perbaikan Mesin">Perbaikan Mesin</option>
+                        <option value="Penambahan Mesin">Penambahan Mesin</option>
+                        <option value="Penambahan Jig">Penambahan Jig</option>
+                        <option value="Trial Produk">Trial Produk</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Kategori</th>
+                            <th>Lini</th>
+                            <th>Uraian Rekayasa / Masalah</th>
+                            <th>Instruksi / Catatan Teknis</th>
+                            <th>PIC</th>
+                            <th>Target</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabel-body">
+                        <!-- Data Realtime dari Firestore -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v12.19.0 (Integrasi Penuh Bebas Bug) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBsYZsvaPw-UbAIdTd00juRmT_ZO5bIEPc",
+            authDomain: "buku-jurnal.firebaseapp.com",
+            projectId: "buku-jurnal",
+            storageBucket: "buku-jurnal.firebasestorage.app",
+            messagingSenderId: "168589697657",
+            appId: "1:168589697657:web:2609a5e0f1349e634b6aa8",
+            measurementId: "G-159M5W8SPQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const jurnalCol = collection(db, 'jurnal_assyAlpha');
+
+        // Sanitasi karakter HTML
+        function escapeHtml(text) {
+            if (!text) return '-';
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Set tanggal otomatis
+        document.getElementById('tanggal').valueAsDate = new Date();
+
+        let databaseCache = [];
+
+        // Penanganan Submit Form
+        document.getElementById('form-jurnal').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const dataBaru = {
+                tanggal: document.getElementById('tanggal').value,
+                kategori: document.getElementById('kategori').value,
+                lini: document.getElementById('lini').value.trim(),
+                judul: document.getElementById('judul').value.trim(),
+                targetSelesai: document.getElementById('target-selesai').value,
+                tindakan: document.getElementById('tindakan').value.trim(),
+                pic: document.getElementById('pic').value.trim(),
+                status: document.getElementById('status').value,
+                waktuInput: new Date().toISOString()
+            };
+
+            try {
+                await addDoc(jurnalCol, dataBaru);
+                document.getElementById('form-jurnal').reset();
+                document.getElementById('tanggal').valueAsDate = new Date();
+            } catch (err) {
+                console.error("Gagal menyimpan catatan: ", err);
+                alert("Penyimpanan gagal: " + err.message);
+            }
+        });
+
+        // Sinkronisasi Real-Time
+        const q = query(jurnalCol, orderBy("tanggal", "desc"));
+        onSnapshot(q, (snapshot) => {
+            databaseCache = [];
+            snapshot.forEach((docSnap) => {
+                databaseCache.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            renderData();
+        }, (error) => {
+            console.error("Firestore Snapshot Error: ", error);
+        });
+
+        // Render Tampilan UI & Agregasi KPI
+        function renderData() {
+            const tbody = document.getElementById('tabel-body');
+            const filterVal = document.getElementById('filter-kategori').value;
+            tbody.innerHTML = '';
+
+            let total = 0, countProject = 0, countMesin = 0, countJig = 0, countTrial = 0;
+
+            databaseCache.forEach((row) => {
+                total++;
+                if (row.kategori === 'Project Line') countProject++;
+                if (row.kategori === 'Perbaikan Mesin' || row.kategori === 'Penambahan Mesin') countMesin++;
+                if (row.kategori === 'Penambahan Jig') countJig++;
+                if (row.kategori === 'Trial Produk') countTrial++;
+
+                if (filterVal !== 'ALL' && row.kategori !== filterVal) {
+                    return;
+                }
+
+                let statusClass = 'st-rencana';
+                if (row.status === 'Sedang Dikerjakan') statusClass = 'st-proses';
+                if (row.status === 'Selesai & Diverifikasi') statusClass = 'st-selesai';
+
+                let catClass = 'cat-project';
+                if (row.kategori === 'Perbaikan Mesin') catClass = 'cat-perbaikan';
+                if (row.kategori === 'Penambahan Mesin') catClass = 'cat-mesin';
+                if (row.kategori === 'Penambahan Jig') catClass = 'cat-jig';
+                if (row.kategori === 'Trial Produk') catClass = 'cat-trial';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 600; color: var(--navy-dark);">${escapeHtml(row.tanggal)}</td>
+                    <td><span class="badge ${catClass}">${escapeHtml(row.kategori)}</span></td>
+                    <td><strong>${escapeHtml(row.lini)}</strong></td>
+                    <td style="font-weight: 500;">${escapeHtml(row.judul)}</td>
+                    <td style="color: var(--text-muted);">${escapeHtml(row.tindakan)}</td>
+                    <td>${escapeHtml(row.pic)}</td>
+                    <td style="font-weight: 500;">${escapeHtml(row.targetSelesai)}</td>
+                    <td><span class="pill-status ${statusClass}">${escapeHtml(row.status)}</span></td>
+                    <td>
+                        <button class="btn-delete" data-id="${row.id}">Hapus</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Update KPI Realtime
+            document.getElementById('kpi-total').innerText = total;
+            document.getElementById('kpi-project').innerText = countProject;
+            document.getElementById('kpi-mesin').innerText = countMesin;
+            document.getElementById('kpi-jig').innerText = countJig;
+            document.getElementById('kpi-trial').innerText = countTrial;
+        }
+
+        // Listener Filter Dropdown
+        document.getElementById('filter-kategori').addEventListener('change', renderData);
+
+        // Event Delegation Tombol Hapus
+        document.getElementById('tabel-body').addEventListener('click', async (e) => {
+            if (e.target.classList.contains('btn-delete')) {
+                const docId = e.target.getAttribute('data-id');
+                if (confirm("Hapus catatan rekayasa ini secara permanen dari Firestore?")) {
+                    try {
+                        await deleteDoc(doc(db, 'jurnal_assyAlpha', docId));
+                    } catch (err) {
+                        console.error("Gagal menghapus dokumen: ", err);
+                        alert("Gagal menghapus: " + err.message);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
