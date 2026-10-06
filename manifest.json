@@ -1,0 +1,21 @@
+{
+  "name": "Dashboard Pengiriman Assembly",
+  "short_name": "Journal Alpha",
+  "description": "Dokumentasi Line Assembly, Mesin Produksi, Jig Produk & Trial Produk",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1a2538",
+  "theme_color": "#203764",
+  "icons": [
+    {
+      "src": "98.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "99.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
